@@ -205,6 +205,8 @@ namespace mu {
             void                setRotation( double radians = 0.0f );
 
             static Mat2         fromIdentity( void );
+            static Mat2         fromRowMajor( double r0c0, double r0c1, double r1c0, double r1c1 );
+            static Mat2         fromRowMajor( const double * );
 
         private:
             double               m_v[4];
@@ -329,6 +331,8 @@ namespace mu {
 
             static Mat3         fromYawPitchRollInDegrees( const Vec3 & YawPitchRollInDegrees );
             static Mat3         fromIdentity();
+            static Mat3         fromRowMajor( double r0c0, double r0c1, double r0c2, double r1c0, double r1c1, double r1c2, double r2c0, double r2c1, double r2c2 );
+            static Mat3         fromRowMajor( const double * );
 
         private:
             double               m_v[9];
@@ -555,6 +559,8 @@ namespace mu {
             static Mat4         fromLookAt( const Vec3 & eye, const Vec3 & center = Vec3(), const Vec3 & up = Vec3( 0.0f, 0.0f, 1.0f ) );
             static Mat4         fromAxisAngle( double degrees, const Vec3 & axis );
             static Mat4         fromYawPitchRollInDegrees( const Vec3 & YawPitchRollInDegrees );
+            static Mat4         fromRowMajor( double r0c0, double r0c1, double r0c2, double r0c3, double r1c0, double r1c1, double r1c2, double r1c3, double r2c0, double r2c1, double r2c2, double r2c3, double r3c0, double r3c1, double r3c2, double r3c3 );
+            static Mat4         fromRowMajor( const double * );
 
         private:
             double               m_v[16];

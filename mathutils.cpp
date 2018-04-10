@@ -772,11 +772,11 @@
 
 	///--------------------------------Mat2-------------------------------
 
-	Mat2::Mat2( double v00, double v01, double v10, double v11 ){
-		m_v[ 0 ] = v00;
-		m_v[ 1 ] = v01;
-		m_v[ 2 ] = v10;
-		m_v[ 3 ] = v11;
+	Mat2::Mat2( double c0r0, double c0r1, double c1r0, double c1r1 ){
+		m_v[ 0 ] = c0r0;
+		m_v[ 1 ] = c0r1;
+		m_v[ 2 ] = c1r0;
+		m_v[ 3 ] = c1r1;
 	}
 
 	Mat2::Mat2( const double * v ){
@@ -947,6 +947,25 @@
 	Mat2 Mat2::fromIdentity( void ){
 		Mat2 m;
 		m.setIdentity();
+		return( m );
+	}
+
+	Mat2 Mat2::fromRowMajor( double r0c0, double r0c1, double r1c0, double r1c1 ){
+		Mat2 m;
+		m.setElement( 0, 0, r0c0 );
+		m.setElement( 0, 1, r1c0 );
+		m.setElement( 1, 0, r0c1 );
+		m.setElement( 1, 1, r1c1 );
+		return m;
+	}
+
+	Mat2 Mat2::fromRowMajor( const double * values ){
+		Mat2 m;
+		for( unsigned int col = 0; col < 2; col++ ){
+			for( unsigned int row = 0; row < 2; row++ ){
+				m.setElement( col, row, values[ row * 2 + col ] );
+			}
+		}
 		return( m );
 	}
 
@@ -1272,18 +1291,18 @@
 
 	///--------------------------------Mat3-------------------------------
 
-	Mat3::Mat3( double v00, double v01, double v02,
-				double v10, double v11, double v12,
-				double v20, double v21, double v22 ){
-		m_v[ 0 ] = v00;
-		m_v[ 1 ] = v01;
-		m_v[ 2 ] = v02;
-		m_v[ 3 ] = v10;
-		m_v[ 4 ] = v11;
-		m_v[ 5 ] = v12;
-		m_v[ 6 ] = v20;
-		m_v[ 7 ] = v21;
-		m_v[ 8 ] = v22;
+	Mat3::Mat3( double c0r0, double c0r1, double c0r2,
+				double c1r0, double c1r1, double c1r2,
+				double c2r0, double c2r1, double c2r2 ){
+		m_v[ 0 ] = c0r0;
+		m_v[ 1 ] = c0r1;
+		m_v[ 2 ] = c0r2;
+		m_v[ 3 ] = c1r0;
+		m_v[ 4 ] = c1r1;
+		m_v[ 5 ] = c1r2;
+		m_v[ 6 ] = c2r0;
+		m_v[ 7 ] = c2r1;
+		m_v[ 8 ] = c2r2;
 	}
 
 
@@ -1675,6 +1694,32 @@
 
 		return( adjugate().transpose() / d );
 	}
+
+  Mat3 Mat3::fromRowMajor( double r0c0, double r0c1, double r0c2, double r1c0, double r1c1, double r1c2, double r2c0, double r2c1, double r2c2 ){
+		Mat3 m;
+		m.setElement( 0, 0, r0c0 );
+		m.setElement( 0, 1, r1c0 );
+		m.setElement( 0, 2, r2c0 );
+		m.setElement( 1, 0, r0c1 );
+		m.setElement( 1, 1, r1c1 );
+		m.setElement( 1, 2, r2c1 );
+		m.setElement( 2, 0, r0c2 );
+		m.setElement( 2, 1, r1c2 );
+		m.setElement( 2, 2, r2c2 );
+		return m;
+	}
+
+	Mat3 Mat3::fromRowMajor( const double * values ){
+		Mat3 m;
+		for( unsigned int col = 0; col < 3; col++ ){
+			for( unsigned int row = 0; row < 3; row++ ){
+				m.setElement( col, row, values[ row * 3 + col ] );
+			}
+		}
+		return( m );
+	}
+
+
 
 	void Mat3::setIdentity( void ){
 		m_v[ 0 ] = 1.0;
@@ -2677,27 +2722,27 @@
 
 	///--------------------------------Mat4-------------------------------
 
-	Mat4::Mat4(	double v00, double v01, double v02, double v03,
-				double v10, double v11, double v12, double v13,
-				double v20, double v21, double v22, double v23,
-				double v30, double v31, double v32, double v33 ){
+	Mat4::Mat4(	double c0r0, double c0r1, double c0r2, double c0r3,
+				double c1r0, double c1r1, double c1r2, double c1r3,
+				double c2r0, double c2r1, double c2r2, double c2r3,
+				double c3r0, double c3r1, double c3r2, double c3r3 ){
 
-		m_v[ 0 ] = v00;
-		m_v[ 1 ] = v01;
-		m_v[ 2 ] = v02;
-		m_v[ 3 ] = v03;
-		m_v[ 4 ] = v10;
-		m_v[ 5 ] = v11;
-		m_v[ 6 ] = v12;
-		m_v[ 7 ] = v13;
-		m_v[ 8 ] = v20;
-		m_v[ 9 ] = v21;
-		m_v[ 10 ] = v22;
-		m_v[ 11 ] = v23;
-		m_v[ 12 ] = v30;
-		m_v[ 13 ] = v31;
-		m_v[ 14 ] = v32;
-		m_v[ 15 ] = v33;
+		m_v[ 0 ] = c0r0;
+		m_v[ 1 ] = c0r1;
+		m_v[ 2 ] = c0r2;
+		m_v[ 3 ] = c0r3;
+		m_v[ 4 ] = c1r0;
+		m_v[ 5 ] = c1r1;
+		m_v[ 6 ] = c1r2;
+		m_v[ 7 ] = c1r3;
+		m_v[ 8 ] = c2r0;
+		m_v[ 9 ] = c2r1;
+		m_v[ 10 ] = c2r2;
+		m_v[ 11 ] = c2r3;
+		m_v[ 12 ] = c3r0;
+		m_v[ 13 ] = c3r1;
+		m_v[ 14 ] = c3r2;
+		m_v[ 15 ] = c3r3;
 	}
 
 	Mat4::Mat4( const double * v ){
@@ -3432,6 +3477,38 @@
 		m.setScaling( scaling );
 		return( m );
 	}
+
+  Mat4 Mat4::fromRowMajor( double r0c0, double r0c1, double r0c2, double r0c3, double r1c0, double r1c1, double r1c2, double r1c3, double r2c0, double r2c1, double r2c2, double r2c3, double r3c0, double r3c1, double r3c2, double r3c3 ){
+		Mat4 m;
+		m.setElement( 0, 0, r0c0 );
+		m.setElement( 0, 1, r1c0 );
+		m.setElement( 0, 2, r2c0 );
+		m.setElement( 0, 3, r3c0 );
+		m.setElement( 1, 0, r0c1 );
+		m.setElement( 1, 1, r1c1 );
+		m.setElement( 1, 2, r2c1 );
+		m.setElement( 1, 3, r3c1 );
+		m.setElement( 2, 0, r0c2 );
+		m.setElement( 2, 1, r1c2 );
+		m.setElement( 2, 2, r2c2 );
+		m.setElement( 2, 3, r3c2 );
+		m.setElement( 3, 0, r0c3 );
+		m.setElement( 3, 1, r1c3 );
+		m.setElement( 3, 2, r2c3 );
+		m.setElement( 3, 3, r3c3 );
+		return m;
+	}
+
+	Mat4 Mat4::fromRowMajor( const double * values ){
+		Mat4 m;
+		for( unsigned int col = 0; col < 4; col++ ){
+			for( unsigned int row = 0; row < 4; row++ ){
+				m.setElement( col, row, values[ row * 4 + col ] );
+			}
+		}
+		return( m );
+	}
+
 
 	Vec4 Mat4::toPolar( void ) const { 
 		Vec2 px = getCol( 0 ).xyz().toPolar();
